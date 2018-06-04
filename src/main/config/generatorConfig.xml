@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context1">
+    
+    <jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/airinfo" driverClass="com.mysql.jdbc.Driver" password="123456" userId="root" />
+    
+    <javaModelGenerator targetPackage="com.isoft.airinfo.db.entity" targetProject="AirInfo/src/main/java" />
+    
+    <sqlMapGenerator targetPackage="com.isoft.airinfo.db.mapper" targetProject="AirInfo/src/main/config" />
+    
+    <javaClientGenerator targetPackage="com.isoft.airinfo.db.mapper" targetProject="AirInfo/src/main/java" type="XMLMAPPER" />
+    
+    <table tableName="common_user" enableCountByExample="false"
+    		enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false">
+      
+    </table>
+    
+    <table tableName="consumption" enableCountByExample="false"
+    		enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false">
+      
+    </table>
+    <table tableName="score" enableCountByExample="false"
+    		enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false">
+      
+    </table>
+  </context>
+</generatorConfiguration>

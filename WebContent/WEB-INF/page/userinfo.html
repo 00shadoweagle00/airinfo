@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
+<script type="text/javascript" src="jquery/jquery-3.2.1.min.js">
+	
+</script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<style type="text/css">
+td{
+	text-align: center;
+}
+</style>
+<script>
+
+window.onload = function () {
+	$.ajax({
+	    url:"logic/user/info",
+	    type:"GET",
+	    dataType:"text",
+	    success:function(data){
+	            console.log(data)
+	            
+	        }
+	    })
+	
+
+};
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+       
+            $.ajax({
+                url: "logic/user/list",//请求地址
+                type: "POST",
+                dataType: "json",
+                success: function(data) {//data是默认的，接收前台返回的数据
+                    //alert("success");    
+                    $.each(data, function(userinfo,c) {//循环
+                        $("#tr").append("<th>"+c.uid+"</th>");
+                        $("#tr").append("<th>"+c.uname+"</th>");
+                        $("#tr").append("<th>"+c.upassword+"</th>");  
+　　　　　　　　　　　　　　// alert(data[0].areaName);////alert(data.row[0].areaName);
+ 
+                  
+                    })
+                }
+            });
+       
+</script>
+
+
+</head>
+<body>
+<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
+<script src="jquery-3.1.1.min.js"></script>
+ <table align="left" border="1" cellpadding="10" cellspacing="0" id="form">
+        <tr>
+            <th>id</th>
+            <th>用户名</th>
+            <th>密码</th>
+        </tr>
+        <tr id="tr">
+
+　　</tr>
+
+</table>
+</body>
+
+
+
+</html>

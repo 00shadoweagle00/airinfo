@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>  
+function getComposition(pageno){  
+      
+    //alert(pageno);   
+    $.ajax(  
+    {  
+        url:'<%=basePath%>composition/compositionlist',  
+        type:'post',  
+        data:"pageno="+pageno,  
+        success:function(data)  
+        {       
+            document.getElementById("composition").innerHTML='';  
+            var divcontent="";  
+            var obj = eval('(' + data + ')');  
+              
+            //alert(obj.data.pageno);  
+              
+            console.log(obj);  
+              
+            divcontent+="<table border='1' borderColor='#ccc' style='width:100%;margin:0px;padding:0px;border-collapse:collapse'>";  
+            divcontent+="<tr><th width='12%' style='text-align:center;background: #79c6fa'>图片</th><th width='12%' style='text-align:center;background: #79c6fa'>绑定</th></tr>";  
+                
+             $.each(obj.data.content, function(i,item)  
+              {   
+                 console.log(item);  
+                 divcontent+="<tr><td style='text-align:center'><img style='width: 100px;height:50px;margin-top:8px;' src='"+item.img+"' /></td><td style='text-align:center'><input type='radio' class='button6'  id='id' name='compositionid' value="+item.id+" /></td></tr>";  
+                   
+              });  
+             divcontent+="</table>";  
+               
+             divcontent+='<div class="pageinfo">';  
+             divcontent+='共<span>'+obj.data.totalpages+'</span>页，每页<span>'+obj.data.pagesize+'</span>条，当前是第<span>'+obj.data.pageno+'</span>页';  
+             divcontent+='</div>';  
+               
+             divcontent+='<div class="pagebar">';  
+               
+                divcontent+='<button onclick="getComposition(1);"';  
+                if(obj.data.pageno==1){  
+                    divcontent+='class="button3"  disabled';  
+                }else if(obj.data.pageno>1){  
+                    divcontent+=' class="button2";'  
+                }  
+                divcontent+='>首页</button>';  
+                  
+                divcontent+='<button onclick="getComposition('+(obj.data.pageno-1) +');"';  
+                if(obj.data.pageno==1){  
+                    divcontent+='class="button3"  disabled';  
+                }else if(obj.data.pageno>1){  
+                    divcontent+=' class="button2";'  
+                }  
+                divcontent+='>上页</button>';  
+                  
+                divcontent+='<button onclick="getComposition('+(obj.data.pageno+1) +');"';  
+                if(obj.data.pageno==obj.data.totalpages){  
+                    divcontent+='class="button3"  disabled';  
+                }else if(obj.data.pageno<obj.data.totalpages){  
+                    divcontent+=' class="button2";'  
+                }  
+                divcontent+='>下页</button>';  
+                  
+                divcontent+='<button onclick="getComposition('+obj.data.totalpages +');"';  
+                if(obj.data.pageno==obj.data.totalpages){  
+                    divcontent+='class="button3"  disabled';  
+                }else if(obj.data.pageno<obj.data.totalpages){  
+                    divcontent+=' class="button2";'  
+                }  
+                divcontent+='>末页</button>';  
+                  
+             divcontent+='</div>';   
+              
+            document.getElementById("composition").innerHTML=divcontent;  
+        }  
+    });  
+}  
+</script>  
+
+<body>
+<div id="composition" ></div>
+</body>
+</html>
