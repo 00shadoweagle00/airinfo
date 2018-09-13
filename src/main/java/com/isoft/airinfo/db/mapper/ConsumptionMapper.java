@@ -1,5 +1,8 @@
 package com.isoft.airinfo.db.mapper;
 
+import java.util.List;
+
+
 import com.isoft.airinfo.db.entity.Consumption;
 
 public interface ConsumptionMapper {
@@ -50,4 +53,7 @@ public interface ConsumptionMapper {
      * @mbg.generated Thu May 24 22:57:51 CST 2018
      */
     int updateByPrimaryKey(Consumption record);
+    List<Consumption> findAll();
+    
+    int deleteUserByUserIds(List<String> userIds);
 }

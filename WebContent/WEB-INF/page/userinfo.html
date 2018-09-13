@@ -1,76 +1,203 @@
 <!DOCTYPE html>
+
 <html>
 <head>
+
+<base href="<%=basePath%>">
+
+<title>用户数据信息</title>
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="UserInfo">
+
+
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
-<script type="text/javascript" src="jquery/jquery-3.2.1.min.js">
-	
-</script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<style type="text/css">
-td{
-	text-align: center;
-}
-</style>
-<script>
 
-window.onload = function () {
-	$.ajax({
-	    url:"logic/user/info",
-	    type:"GET",
-	    dataType:"text",
-	    success:function(data){
-	            console.log(data)
-	            
-	        }
-	    })
-	
+<script type="text/javascript" src="../../jquery/jquery-3.2.1.min.js"></script>
 
-};
+<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../bootstrap/css/bootstrap-theme.min.css" />
+
+<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js">
 
 </script>
 
-<script type="text/javascript">
-    $(function () {
-       
-            $.ajax({
-                url: "logic/user/list",//请求地址
-                type: "POST",
-                dataType: "json",
-                success: function(data) {//data是默认的，接收前台返回的数据
-                    //alert("success");    
-                    $.each(data, function(userinfo,c) {//循环
-                        $("#tr").append("<th>"+c.uid+"</th>");
-                        $("#tr").append("<th>"+c.uname+"</th>");
-                        $("#tr").append("<th>"+c.upassword+"</th>");  
-　　　　　　　　　　　　　　// alert(data[0].areaName);////alert(data.row[0].areaName);
- 
-                  
-                    })
-                }
-            });
-       
+ <script type="text/javascript" src="../../bootstrap/js/list.js">
+
 </script>
+
 
 
 </head>
 <body>
-<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
-<script src="jquery-3.1.1.min.js"></script>
- <table align="left" border="1" cellpadding="10" cellspacing="0" id="form">
-        <tr>
-            <th>id</th>
-            <th>用户名</th>
-            <th>密码</th>
-        </tr>
-        <tr id="tr">
 
-　　</tr>
+    <!-- 使用bootstrap栅格系统搭建显示页面 -->
+    <div class="container">
+        <!-- 标题 -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>USER INFO</h1>
+            </div>
+        </div>
+        <!-- 增加删除按钮 -->
+        <div class="row">
+            <!-- 使用列偏移 -->
+            <div class="col-sm-4 col-sm-offset-10">
+                <!-- 使用按钮样式 -->
+                <button type="button" class="btn btn-primary btn-sm" id="userAddBtn">增加</button>
+                <button type="button" class="btn btn-primary btn-sm" id="usersDelBtn">删除</button>
+            </div>
+        </div>
+        <!-- 列表信息 -->
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover" id="user_table">
+                    <thead>
+                        <tr>
+                        	<th width="20%"><input type="checkbox" id="chkboxAll"/>全选</th>
+                            <th width="20%">id</th>
+                            <th width="20%">用户名</th>
+                            <th width="20%">密码</th>
+                            <th width="20%">操作</th>
+     
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- 分页 -->
+        <div class="row">
+            <!-- 分页文字信息 -->
+            <div class="col-sm-3" id="pageInfo_area"></div>
+            <!-- 分页条信息 -->
+            <div class="col-sm-5 col-sm-offset-4" id="pageNav_area"></div>
+        </div>
+    </div>
+    <!-- 新增模态框 -->
+    <div class="modal fade" id="userAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document" style="width: 35%">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title" id="myModalLabel">新增</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" id="userAddModalForm">
+              <div class="form-group" style="display: none;">
+                <label class="col-sm-2 control-label">id</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" name="uid">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">用户</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="userAddModal_userName" name="uname" placeholder="请输入用户名">
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-8">
+                  <input type="password" class="form-control" id="userAddModal_userPwd" name="upassword" placeholder="请输入密码">
+                  <span class="help-block"></span>
+                </div>
+              </div>
 
-</table>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary btn-sm" id="userAddModalSaveBtn">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+	<!-- 修改模态框 -->
+    <div class="modal fade" id="userUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document" style="width: 35%">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title">修改</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" id="userUpdateModalForm">
+              <div class="form-group" style="display: none;">
+                <label class="col-sm-2 control-label">id</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="userUpdateModal_userId" name="uid">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">用户</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="userUpdateModal_userName" name="uname" placeholder="请输入用户名">
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="userUpdateModal_userPwd" name="upassword" placeholder="请输入密码">
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary btn-sm" id="userUpdateModalSaveBtn">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 单个删除模态框 -->
+    <div class="modal fade bs-example-modal-sm" id="userDelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title">删除</h5>
+          </div>
+          <div class="modal-body">
+                确认删除此条数据？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-danger btn-sm" id="userDelModalSaveBtn">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 批量删除模态框 -->
+    <div class="modal fade bs-example-modal-sm" id="userDelModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title">删除</h5>
+          </div>
+          <div class="modal-body">
+                <span id="usersDelModalMsg"></span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-danger btn-sm" id="userDelModalSaveBtns">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 

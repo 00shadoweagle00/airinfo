@@ -54,4 +54,8 @@ public interface CommonUserMapper {
     int updateByPrimaryKey(CommonUser record);
     List<CommonUser> findAll();
 
+    int deleteUserByUserIds(List<String> userIds);
+    int selectCountByUserName(String uname);
+    int selectId(String uname);
+    CommonUser selectByUserName(String uname);
 }

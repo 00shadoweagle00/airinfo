@@ -1,6 +1,10 @@
 package com.isoft.airinfo.db.mapper;
 
+import java.util.List;
+
+
 import com.isoft.airinfo.db.entity.Score;
+import com.isoft.airinfo.db.entity.rank;
 
 public interface ScoreMapper {
     /**
@@ -50,4 +54,8 @@ public interface ScoreMapper {
      * @mbg.generated Thu May 24 22:57:51 CST 2018
      */
     int updateByPrimaryKey(Score record);
+    List<Score> findAll();
+    List<Score> findRank();
+    List<rank> findRank1();
+    int deleteUserByUserIds(List<String> userIds);
 }

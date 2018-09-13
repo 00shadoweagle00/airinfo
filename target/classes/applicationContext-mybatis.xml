@@ -27,9 +27,9 @@
 		<property name="configuration" ref="mybatisConfig" />
 		<property name="plugins">
 			<array>
-				<bean class="com.github.pagehelper.PageInterceptor">
+				<bean class="com.github.pagehelper.PageHelper">
 					<property name="properties">
-						<value>helperDialect = mysql</value>
+						<value>helperDialect = mysql reasonable=true</value>
 					</property>
 				</bean>
 			</array>
@@ -50,5 +50,6 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+
 
 </beans>
